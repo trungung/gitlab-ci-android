@@ -40,14 +40,16 @@ RUN apt-get -qq update && \
       libxaw7-dev \
       x11vnc \
       wget \
+      xutils-dev \
+      gcc \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN rm -f /etc/ssl/certs/java/cacerts; \
     /var/lib/dpkg/info/ca-certificates-java.postinst configure
 
-RUN wget -qO- http://dl.google.com/android/repository/tools_r${VERSION_SDK_TOOLS}-linux.zip && unzip tools_r${VERSION_SDK_TOOLS}-linux.zip -d /sdk && \
+RUN wget -nv http://dl.google.com/android/repository/tools_r${VERSION_SDK_TOOLS}-linux.zip && unzip tools_r${VERSION_SDK_TOOLS}-linux.zip -d /sdk && \
     rm -v tools_r${VERSION_SDK_TOOLS}-linux.zip
 
-RUN wget -qO- http://www.sodan.org/~penny/vncrec/vncrec-0.2.tar.gz && tar -zxvf vncrec-0.2.tar.gz && rm vncrec-0.2.tar.gz && cd vncrec-0.2 && xmkmf -a && cd libvncauth; make && cd ../vncrec; make && mv vncrec /usr/local/bin
+RUN wget -nv http://www.sodan.org/~penny/vncrec/vncrec-0.2.tar.gz && tar -zxvf vncrec-0.2.tar.gz && rm vncrec-0.2.tar.gz && cd vncrec-0.2 && cd libvncauth && xmkmf && make libvncauth.a && cd ../vncrec && xmkmf && make vncrec && chmod +x vncrec && mv vncrec /usr/local/bin
 
 RUN (while [ 1 ]; do sleep 5; echo y; done) | ${ANDROID_HOME}/tools/android update sdk -u -a -t ${SDK_PACKAGES}
