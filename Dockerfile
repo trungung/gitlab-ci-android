@@ -11,7 +11,7 @@ ENV VERSION_SDK_TOOLS "25.2.2"
 ENV VERSION_BUILD_TOOLS "24.0.3"
 ENV VERSION_TARGET_SDK "23"
 
-ENV SDK_PACKAGES "build-tools-${VERSION_BUILD_TOOLS},android-${VERSION_TARGET_SDK},addon-google_apis-google-${VERSION_TARGET_SDK},platform-tools,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository"
+ENV SDK_PACKAGES "build-tools-${VERSION_BUILD_TOOLS},android-${VERSION_TARGET_SDK},addon-google_apis-google-${VERSION_TARGET_SDK},platform-tools,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,sys-img-armeabi-v7a-android-${VERSION_TARGET_SDK},sys-img-x86-android-${VERSION_TARGET_SDK}"
 
 ENV ANDROID_HOME "/sdk"
 ENV PATH "$PATH:${ANDROID_HOME}/tools"
