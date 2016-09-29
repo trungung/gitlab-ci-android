@@ -50,6 +50,10 @@ RUN rm -f /etc/ssl/certs/java/cacerts; \
 RUN wget -nv http://dl.google.com/android/repository/tools_r${VERSION_SDK_TOOLS}-linux.zip && unzip tools_r${VERSION_SDK_TOOLS}-linux.zip -d /sdk && \
     rm -v tools_r${VERSION_SDK_TOOLS}-linux.zip
 
-RUN wget -nv http://www.sodan.org/~penny/vncrec/vncrec-0.2.tar.gz && tar -zxvf vncrec-0.2.tar.gz && rm vncrec-0.2.tar.gz && cd vncrec-0.2 && cd libvncauth && xmkmf && make libvncauth.a && cd ../vncrec && xmkmf && make vncrec && chmod +x vncrec && mv vncrec /usr/local/bin
+RUN wget -nv http://ronja.twibright.com/utils/vncrec-twibright.tgz && tar -zxvf vncrec-twibright.tgz && rm vncrec-twibright.tgz && cd vncrec-twibright && \
+    xmkmf && make World && \
+    chmod a+x vncrec/vncrec && mv vncrec/vncrec /usr/local/bin && \
+    chmod a+x vncconnect/vncconnect && mv vncconnect/vncconnect /usr/local/bin && \
+    chmod a+x vncpasswd/vncpasswd && mv vncpasswd/vncpasswd /usr/local/bin
 
 RUN (while [ 1 ]; do sleep 5; echo y; done) | ${ANDROID_HOME}/tools/android update sdk -u -a -t ${SDK_PACKAGES}
