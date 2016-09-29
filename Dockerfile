@@ -52,6 +52,9 @@ RUN rm -f /etc/ssl/certs/java/cacerts; \
 RUN wget -nv http://dl.google.com/android/repository/tools_r${VERSION_SDK_TOOLS}-linux.zip && unzip tools_r${VERSION_SDK_TOOLS}-linux.zip -d /sdk && \
     rm -v tools_r${VERSION_SDK_TOOLS}-linux.zip
 
+RUN mkdir /sdk/tools/keymaps && \
+    touch /sdk/tools/keymaps/en-us
+
 RUN wget -nv http://ronja.twibright.com/utils/vncrec-twibright.tgz && tar -zxvf vncrec-twibright.tgz && rm vncrec-twibright.tgz && cd vncrec-twibright && \
     xmkmf && make World && \
     chmod a+x vncrec/vncrec && mv vncrec/vncrec /usr/local/bin && \
