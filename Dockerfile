@@ -43,6 +43,7 @@ RUN apt-get -qq update && \
       xutils-dev \
       gcc \
       ffmpeg2theora \
+      qemu-kvm \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN rm -f /etc/ssl/certs/java/cacerts; \
