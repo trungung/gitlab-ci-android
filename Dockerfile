@@ -44,11 +44,9 @@ RUN apt-get -qq update && \
 RUN rm -f /etc/ssl/certs/java/cacerts; \
     /var/lib/dpkg/info/ca-certificates-java.postinst configure
 
-ADD http://dl.google.com/android/repository/tools_r${VERSION_SDK_TOOLS}-linux.zip /tools.zip
-RUN unzip /tools.zip -d /sdk && \
-    rm -v /tools.zip
+RUN wget -qO- http://dl.google.com/android/repository/tools_r${VERSION_SDK_TOOLS}-linux.zip && unzip tools_r${VERSION_SDK_TOOLS}-linux.zip -d /sdk && \
+    rm -v tools_r${VERSION_SDK_TOOLS}-linux.zip
 
-ADD http://www.sodan.org/~penny/vncrec/vncrec-0.2.tar.gz /vncrec-0.2.tar.gz
-RUN tar -zxvf vncrec-0.2.tar.gz && cd vncrec-0.2 && xmkmf -a && cd libvncauth; make && cd ../vncrec; make && mv vncrec /usr/local/bin
+RUN wget -qO- http://www.sodan.org/~penny/vncrec/vncrec-0.2.tar.gz && tar -zxvf vncrec-0.2.tar.gz && rm vncrec-0.2.tar.gz && cd vncrec-0.2 && xmkmf -a && cd libvncauth; make && cd ../vncrec; make && mv vncrec /usr/local/bin
 
 RUN (while [ 1 ]; do sleep 5; echo y; done) | ${ANDROID_HOME}/tools/android update sdk -u -a -t ${SDK_PACKAGES}
