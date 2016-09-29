@@ -39,6 +39,7 @@ RUN apt-get -qq update && \
       xorg-dev \
       libxaw7-dev \
       x11vnc \
+      wget \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN rm -f /etc/ssl/certs/java/cacerts; \
