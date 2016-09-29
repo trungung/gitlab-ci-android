@@ -36,7 +36,7 @@ RUN apt-get -qq update && \
       unzip \
       qtbase5-dev \
       qtdeclarative5-dev \
-      xlibs-dev \
+      xorg-dev \
       libxaw7-dev \
       x11vnc \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
