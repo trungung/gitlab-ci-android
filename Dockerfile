@@ -44,6 +44,7 @@ RUN apt-get -qq update && \
       gcc \
       ffmpeg2theora \
       qemu-kvm \
+      tightvncserver \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN rm -f /etc/ssl/certs/java/cacerts; \
@@ -51,6 +52,8 @@ RUN rm -f /etc/ssl/certs/java/cacerts; \
 
 RUN wget -nv http://dl.google.com/android/repository/tools_r${VERSION_SDK_TOOLS}-linux.zip && unzip tools_r${VERSION_SDK_TOOLS}-linux.zip -d /sdk && \
     rm -v tools_r${VERSION_SDK_TOOLS}-linux.zip
+
+COPY wait-for-avd-boot.sh /sdk/platform-tools
 
 RUN mkdir /sdk/tools/keymaps && \
     touch /sdk/tools/keymaps/en-us
