@@ -36,16 +36,11 @@ RUN apt-get -qq update && \
       unzip \
       qtbase5-dev \
       qtdeclarative5-dev \
-      xorg-dev \
-      libxaw7-dev \
-      x11vnc \
       wget \
-      xutils-dev \
-      gcc \
-      ffmpeg2theora \
       qemu-kvm \
-      tightvncserver \
-      xfonts-base \
+      build-essential \
+      python2.7 \
+      python2.7-dev \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN rm -f /etc/ssl/certs/java/cacerts; \
@@ -54,15 +49,12 @@ RUN rm -f /etc/ssl/certs/java/cacerts; \
 RUN wget -nv http://dl.google.com/android/repository/tools_r${VERSION_SDK_TOOLS}-linux.zip && unzip tools_r${VERSION_SDK_TOOLS}-linux.zip -d /sdk && \
     rm -v tools_r${VERSION_SDK_TOOLS}-linux.zip
 
-COPY wait-for-avd-boot.sh /sdk/platform-tools
+RUN wget -nv https://pypi.python.org/packages/1e/8e/40c71faa24e19dab555eeb25d6c07efbc503e98b0344f0b4c3131f59947f/vnc2flv-20100207.tar.gz && tar -zxvf vnc2flv-20100207.tar.gz && rm vnc2flv-20100207.tar.gz && \
+    cd vnc2flv-20100207 && ln -s /usr/bin/python2.7 /usr/bin/python && python setup.py install
+
+COPY wait-for-avd-boot.sh /sdk/platform-tools/
 
 RUN mkdir /sdk/tools/keymaps && \
     touch /sdk/tools/keymaps/en-us
-
-RUN wget -nv http://ronja.twibright.com/utils/vncrec-twibright.tgz && tar -zxvf vncrec-twibright.tgz && rm vncrec-twibright.tgz && cd vncrec-twibright && \
-    xmkmf && make World && \
-    chmod a+x vncrec/vncrec && mv vncrec/vncrec /usr/local/bin && \
-    chmod a+x vncconnect/vncconnect && mv vncconnect/vncconnect /usr/local/bin && \
-    chmod a+x vncpasswd/vncpasswd && mv vncpasswd/vncpasswd /usr/local/bin
 
 RUN (while [ 1 ]; do sleep 5; echo y; done) | ${ANDROID_HOME}/tools/android update sdk -u -a -t ${SDK_PACKAGES}
