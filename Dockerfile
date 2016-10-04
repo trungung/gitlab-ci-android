@@ -41,6 +41,7 @@ RUN apt-get -qq update && \
       build-essential \
       python2.7 \
       python2.7-dev \
+      yamdi \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN rm -f /etc/ssl/certs/java/cacerts; \
