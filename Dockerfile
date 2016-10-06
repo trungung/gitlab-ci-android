@@ -56,4 +56,8 @@ RUN wget -nv https://pypi.python.org/packages/1e/8e/40c71faa24e19dab555eeb25d6c0
 RUN mkdir /sdk/tools/keymaps && \
     touch /sdk/tools/keymaps/en-us
 
+RUN mkdir /helpers
+
+COPY wait-for-avd-boot.sh /helpers
+
 RUN (while [ 1 ]; do sleep 5; echo y; done) | ${ANDROID_HOME}/tools/android update sdk -u -a -t ${SDK_PACKAGES}
