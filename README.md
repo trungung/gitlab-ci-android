@@ -32,7 +32,7 @@ test:
 
 ```
 
-## Example `.gitlab-ci.yml` with tests in emulator and recording of the screen.
+## Example `.gitlab-ci.yml` with visual tests in emulator and recording of the screen.
 
 ```
 image: jerbob92/gitlab-ci-android:latest
@@ -64,7 +64,6 @@ test:
   stage: test
   script:
       - echo "no" | /sdk/tools/android create avd -f -n test -t android-23 --abi "google_apis/x86" -s WXGA720
-      - cp -rf resources/avd.ini ~/.android/avd/test.avd/config.ini
       - echo "no" | /sdk/tools/emulator64-x86 -avd test -wipe-data -noaudio -no-window -gpu off -verbose -qemu -usbdevice tablet -vnc :2 &
       - /helpers/wait-for-avd-boot.sh
       - /sdk/platform-tools/adb install -r app/build/outputs/apk/app-debug.apk
@@ -86,3 +85,5 @@ test:
 ```
 
 Change [package-name] to your package name and [test-class] to your testing class.
+This example will record the screen, if the tests fail it will upload the video and the test log.
+We use this in combination with the Espresso testing framework.
