@@ -61,3 +61,9 @@ RUN mkdir /helpers
 COPY wait-for-avd-boot.sh /helpers
 
 RUN (while [ 1 ]; do sleep 5; echo y; done) | ${ANDROID_HOME}/tools/android update sdk -u -a -t ${SDK_PACKAGES}
+
+# Download and install Google Cloud SDK
+RUN wget -nv  https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz && tar -zxvf google-cloud-sdk.tar.gz && ./google-cloud-sdk/install.sh --usage-reporting=false --path-update=true 
+RUN PATH="google-cloud-sdk/bin:${PATH}"
+RUN echo y | gcloud --quiet components update
+RUN echo y | gcloud components install beta
