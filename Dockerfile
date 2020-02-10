@@ -11,7 +11,7 @@ ENV VERSION_SDK_TOOLS "28.0.3"
 ENV VERSION_BUILD_TOOLS "28.0.3"
 ENV VERSION_TARGET_SDK "28"
 
-ENV SDK_PACKAGES "build-tools-${VERSION_BUILD_TOOLS},android-${VERSION_TARGET_SDK},addon-google_apis-google-${VERSION_TARGET_SDK},platform-tools,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,sys-img-x86-android-${VERSION_TARGET_SDK},sys-img-x86-google_apis-${VERSION_TARGET_SDK}"
+ENV SDK_PACKAGES "build-tools-${VERSION_BUILD_TOOLS},android-${VERSION_TARGET_SDK},addon-google_apis-google-${VERSION_TARGET_SDK},platform-tools,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository"
 
 ENV ANDROID_HOME "/sdk"
 ENV PATH "$PATH:${ANDROID_HOME}/tools"
@@ -56,9 +56,8 @@ RUN wget -nv https://pypi.python.org/packages/1e/8e/40c71faa24e19dab555eeb25d6c0
 RUN mkdir /sdk/tools/keymaps && \
     touch /sdk/tools/keymaps/en-us
 
-RUN mkdir /helpers
-
-COPY wait-for-avd-boot.sh /helpers
+# RUN mkdir /helpers
+# COPY wait-for-avd-boot.sh /helpers
 
 RUN (while [ 1 ]; do sleep 5; echo y; done) | ${ANDROID_HOME}/tools/android update sdk -u -a -t ${SDK_PACKAGES}
 
