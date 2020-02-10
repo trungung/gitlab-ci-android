@@ -7,9 +7,9 @@
 FROM ubuntu:16.04
 MAINTAINER Sucipto <chip@pringstudio.com>
 
-ENV VERSION_SDK_TOOLS "25.2.2"
-ENV VERSION_BUILD_TOOLS "24.0.3"
-ENV VERSION_TARGET_SDK "23"
+ENV VERSION_SDK_TOOLS "28.0.3"
+ENV VERSION_BUILD_TOOLS "28.0.3"
+ENV VERSION_TARGET_SDK "28"
 
 ENV SDK_PACKAGES "build-tools-${VERSION_BUILD_TOOLS},android-${VERSION_TARGET_SDK},addon-google_apis-google-${VERSION_TARGET_SDK},platform-tools,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,sys-img-x86-android-${VERSION_TARGET_SDK},sys-img-x86-google_apis-${VERSION_TARGET_SDK}"
 
@@ -66,6 +66,7 @@ RUN (while [ 1 ]; do sleep 5; echo y; done) | ${ANDROID_HOME}/tools/android upda
 RUN wget -nv  https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz 
 RUN tar -zxvf google-cloud-sdk.tar.gz && ./google-cloud-sdk/install.sh --usage-reporting=false --path-update=true 
 # Adding the package path to local
-ENV PATH="google-cloud-sdk/bin:${PATH}"
+ENV GCLOUD_HOME "/google-cloud-sdk"
+ENV PATH "$PATH:${GCLOUD_HOME}/bin"
 RUN echo y | gcloud --quiet components update
 RUN echo y | gcloud components install beta
